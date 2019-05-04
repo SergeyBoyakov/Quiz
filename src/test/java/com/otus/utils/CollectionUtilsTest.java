@@ -2,7 +2,6 @@ package com.otus.utils;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.otus.utils.CollectionUtils.equalElementsCountConsideringIndex;
 import static com.otus.utils.CollectionUtils.nonNull;

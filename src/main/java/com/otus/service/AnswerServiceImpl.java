@@ -4,7 +4,6 @@ import com.otus.domain.QuizElement;
 import com.otus.repository.CsvRepository;
 import com.otus.utils.CollectionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
