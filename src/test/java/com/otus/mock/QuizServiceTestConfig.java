@@ -12,9 +12,6 @@ import static org.mockito.Mockito.mock;
 @Configuration
 public class QuizServiceTestConfig {
 
-    private static final String QUESTION = "question";
-    private static final String ANSWER = "answer";
-
     @Bean
     public QuizService quizService(){
         return new QuizServiceImpl(csvRepository(), null);
