@@ -43,8 +43,6 @@ class QuizServiceImplTest {
         List<QuizElement> allQuizElements = quizService.getAllQuizElements();
 
         // then
-        assertAll(
-                () -> assertEquals(Collections.singletonList(new QuizElement(QUESTION, ANSWER)), allQuizElements)
-        );
+        assertEquals(Collections.singletonList(new QuizElement(QUESTION, ANSWER)), allQuizElements);
     }
 }
