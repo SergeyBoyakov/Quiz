@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -23,8 +24,8 @@ import static org.mockito.Mockito.when;
 @FieldDefaults(level = PRIVATE)
 class QuizServiceImplTest {
 
-    static final String QUESTION = "question";
-    static final String ANSWER = "answer";
+    private static final String QUESTION = "question";
+    private static final String ANSWER = "answer";
 
     @Autowired
     CsvRepository csvRepository;
@@ -43,9 +44,7 @@ class QuizServiceImplTest {
 
         // then
         assertAll(
-                () -> assertThat(allQuizElements).hasSize(1),
-                () -> assertThat(allQuizElements.get(0).getQuestion()).isEqualTo(QUESTION),
-                () -> assertThat(allQuizElements.get(0).getCorrectAnswer()).isEqualTo(ANSWER)
+                () -> assertEquals(Collections.singletonList(new QuizElement(QUESTION, ANSWER)), allQuizElements)
         );
     }
 }
