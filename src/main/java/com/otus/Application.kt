@@ -7,8 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan
 
 @ComponentScan
-class Application {
-}
+open class Application
 
 fun main() {
 
@@ -19,11 +18,7 @@ fun main() {
     userService.askLastName()
 
     val quizService = context.getBean(QuizService::class.java)
-    quizService.askQuestion(0)
-    quizService.askQuestion(1)
-    quizService.askQuestion(2)
-    quizService.askQuestion(3)
-    quizService.askQuestion(4)
+    quizService.askAllQuestions()
 
     val answerService = context.getBean(AnswerService::class.java)
     answerService.showResult()

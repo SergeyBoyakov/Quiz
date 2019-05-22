@@ -1,20 +1,30 @@
 package com.otus.service
 
-import com.otus.domain.QuizElement
-import com.otus.repository.CsvRepository
+import com.otus.service.localization.LocalizationLabels
+import com.otus.service.localization.LocalizationService
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
-class QuizServiceImpl(private val csvRepository: CsvRepository,
-                      private val answerService: AnswerService?) : QuizService {
-    private val scanner = Scanner(System.`in`)
+class QuizServiceImpl(
+    private val answerService: AnswerService,
+    private val localizationService: LocalizationService,
+    labels: LocalizationLabels
+) : QuizService {
+    private val allQuestionLabels = listOf(
+        labels.FIRST_QUESTION,
+        labels.SECOND_QUESTION,
+        labels.THIRD_QUESTION,
+        labels.FOURTH_QUESTION,
+        labels.FIFTH_QUESTION
+    )
 
-    override fun askQuestion(questionIndex: Int) {
-        print(getAllQuizElements()[questionIndex].question)
-
-        answerService?.askAnswer(questionIndex)
+    override fun askAllQuestions() {
+        allQuestionLabels.forEach { askQuestionWith(it) }
     }
 
-    override fun getAllQuizElements(): List<QuizElement> = csvRepository.getAllElements()
+    override fun askQuestionWith(questionLabel: String) {
+        println(localizationService.getLocalizedStringByLabel(questionLabel))
+
+        answerService.askAnswer(questionLabel)
+    }
 }

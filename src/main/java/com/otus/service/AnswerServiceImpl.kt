@@ -7,21 +7,23 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class AnswerServiceImpl(private val userService: UserService,
-                        private val csvRepository: CsvRepository,
-                        private val utils: CollectionUtils) : AnswerService {
+class AnswerServiceImpl(
+    private val userService: UserService,
+    private val csvRepository: CsvRepository,
+    private val utils: CollectionUtils
+) : AnswerService {
 
     private val scanner = Scanner(System.`in`)
-    private val userAnswers = mutableListOf<Int>()
+    private val questionLabelToUserAnswer = mutableMapOf<String, Int>()
 
     override fun showResult() {
         userService.showFullName()
-        print("You result: ${getResult()} of ${questionCount()}")
+        println("You result: ${getResult()} of ${questionCount()}")
     }
 
-    override fun askAnswer(quizElementIndex: Int): Int {
+    override fun askAnswer(questionLabel: String): Int {
         val answer = scanner.nextInt()
-        userAnswers.add(scanner.nextInt())
+        questionLabelToUserAnswer[questionLabel] = answer
 
         return answer
     }
@@ -32,13 +34,14 @@ class AnswerServiceImpl(private val userService: UserService,
 
     private fun getResult(): Long {
         val correctAnswers = getCorrectAnswers(csvRepository.getAllElements())
-        return utils.equalElementsCountConsideringIndex(correctAnswers, userAnswers)
+
+        return utils.equalElementsCountConsideringIndex(correctAnswers, questionLabelToUserAnswer.values.toList())
     }
 
     private fun getCorrectAnswers(allElements: List<QuizElement>): List<Int> {
         return allElements
-                .map { it.correctAnswer }
-                .map { it.toInt() }
-                .toList()
+            .map { it.correctAnswer }
+            .map { it.toInt() }
+            .toList()
     }
 }
