@@ -1,9 +1,7 @@
 package com.otus.service
 
-import com.otus.domain.QuizElement
-
 interface QuizService {
 
-    fun askQuestionWith(questionLabel: String)
+    fun askQuestionWith(questionLabel: String): String
     fun askAllQuestions()
 }

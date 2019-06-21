@@ -8,23 +8,24 @@ import org.springframework.stereotype.Service
 class QuizServiceImpl(
     private val answerService: AnswerService,
     private val localizationService: LocalizationService,
-    labels: LocalizationLabels
+    private val printService: PrintService
 ) : QuizService {
     private val allQuestionLabels = listOf(
-        labels.FIRST_QUESTION,
-        labels.SECOND_QUESTION,
-        labels.THIRD_QUESTION,
-        labels.FOURTH_QUESTION,
-        labels.FIFTH_QUESTION
+        LocalizationLabels.FIRST_QUESTION,
+        LocalizationLabels.SECOND_QUESTION,
+        LocalizationLabels.THIRD_QUESTION,
+        LocalizationLabels.FOURTH_QUESTION,
+        LocalizationLabels.FIFTH_QUESTION
     )
 
-    override fun askAllQuestions() {
-        allQuestionLabels.forEach { askQuestionWith(it) }
-    }
+    override fun askAllQuestions() = allQuestionLabels.forEach { askQuestionWith(it) }
 
-    override fun askQuestionWith(questionLabel: String) {
-        println(localizationService.getLocalizedStringByLabel(questionLabel))
+    override fun askQuestionWith(questionLabel: String): String {
+        val localizedString = localizationService.getLocalizedStringByLabel(questionLabel)
+        printService.println(localizedString)
 
         answerService.askAnswer(questionLabel)
+
+        return localizedString
     }
 }
